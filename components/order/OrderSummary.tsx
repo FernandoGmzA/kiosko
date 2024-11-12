@@ -1,7 +1,7 @@
 "use client";
 
 import { useStore } from "@/src/store";
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import ProductDetails from "./ProductDetails";
 import { formatCurrency } from "@/src/utils";
 import { createOrder } from "@/actions/create-order-action";
@@ -10,6 +10,7 @@ import { toast } from "react-toastify";
 
 const OrderSummary = () => {
   const order = useStore((state) => state.order);
+  const clearOrder = useStore((state) => state.clearOrder);
   const total = useMemo(
     () => order.reduce((total, item) => total + item.quantity * item.price, 0),
     [order]
@@ -19,9 +20,11 @@ const OrderSummary = () => {
     const data = {
       name: formData.get("name"),
       total,
+      order,
     };
 
     const result = orderSchema.safeParse(data);
+
     if (!result.success) {
       result.error.issues.forEach((issue) => {
         toast.error(issue.message);
@@ -35,6 +38,9 @@ const OrderSummary = () => {
         toast.error(issue.message);
       });
     }
+
+    toast.success("Order placed successfully");
+    clearOrder();
   };
   return (
     <aside className=" lg:h-screen lg:overflow-y-scroll md:w-64 lg:w-96 p-5">
@@ -57,11 +63,13 @@ const OrderSummary = () => {
               className=" bg-white border border-gray-100 p-2 w-full"
               name="name"
             />
-            <input
+            <button
               type="submit"
-              className=" py-2 rounded uppercase text-white bg-black w-full text-center cursor-pointer"
+              className="py-2 rounded uppercase text-white bg-black w-full text-center cursor-pointer"
               value={"Submit order"}
-            />
+            >
+              Submit order
+            </button>
           </form>
         </div>
       )}
