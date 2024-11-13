@@ -1,4 +1,5 @@
 import ProductCard from "@/components/products/ProductCard";
+import Heading from "@/components/ui/Heading";
 import { prisma } from "@/src/lib/prisma";
 
 async function getProducts(category: string) {
@@ -24,7 +25,7 @@ export default async function OrderPage({
 
   return (
     <>
-      <h1>Choose and personalize your order</h1>
+      <Heading children="Choose and personalize your order" />
       <div className=" grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-4 items-start">
         {products.map((product) => (
           <ProductCard key={product.id} product={product} />
