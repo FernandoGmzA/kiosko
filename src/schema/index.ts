@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { number, z } from "zod";
 
 export const orderSchema = z.object({
   name: z.string().min(1, "Please add a name"),
@@ -12,4 +12,11 @@ export const orderSchema = z.object({
       subtotal: z.number(),
     })
   ),
+});
+
+export const orderIdSchema = z.object({
+  orderId: z
+    .string()
+    .transform((value) => parseInt(value))
+    .refine((value) => value > 0, { message: "Error on orderId" }),
 });
