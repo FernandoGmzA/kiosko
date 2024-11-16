@@ -17,7 +17,7 @@ export default function ProductSearchForm() {
       });
     }
 
-    redirect(`admin/products/search?search=${result.data?.search}`);
+    redirect(`/admin/products/search?search=${result.data?.search}`);
   };
   return (
     <form action={handleSearchForm} className=" flex items-center">
