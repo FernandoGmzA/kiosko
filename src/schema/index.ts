@@ -24,3 +24,20 @@ export const orderIdSchema = z.object({
 export const SearchSchema = z.object({
   search: z.string().trim().min(1, { message: "Search cannot be empty" }),
 });
+
+export const ProductSchema = z.object({
+  name: z.string().trim().min(1, { message: "Name cannot be empty" }),
+  price: z
+    .string()
+    .trim()
+    .transform((value) => parseFloat(value))
+    .refine((value) => value > 0, { message: "Not valid price" })
+    .or(z.number().min(1, { message: "You must enter a category" })),
+  categoryId: z
+    .string()
+    .trim()
+    .transform((value) => parseInt(value))
+    .refine((value) => value > 0, { message: "You must enter a category" })
+    .or(z.number().min(1, { message: "You must enter a category" })),
+  image: z.string().min(1, { message: "You must submit an image" }),
+});

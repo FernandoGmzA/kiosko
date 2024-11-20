@@ -1,9 +1,14 @@
-import React from "react";
+import AddProductForm from "@/components/products/AddProductForm";
+import ProductForm from "@/components/products/ProductForm";
+import Heading from "@/components/ui/Heading";
 
 export default function CreateProductPage() {
   return (
-    <div>
-      <h1>CreateProductPage</h1>
-    </div>
+    <>
+      <Heading children={"New Product"} />
+      <AddProductForm>
+        <ProductForm />
+      </AddProductForm>
+    </>
   );
 }
