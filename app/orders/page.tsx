@@ -1,9 +1,9 @@
 "use client";
 
 import useSWR from "swr";
-import OrderCard from "@/components/order/OrderCard";
-import Heading from "@/components/ui/Heading";
+import Logo from "@/components/ui/Logo";
 import { OrderWithProducts } from "@/src/types";
+import LatestOrderItem from "@/components/order/LatestOrderItem";
 
 export default function OrdersPage() {
   const url = "/admin/orders/api";
@@ -20,16 +20,19 @@ export default function OrdersPage() {
   if (data)
     return (
       <>
-        <Heading children={"Admin your orders"} />
+        <h1 className=" text-center mt-20 text-6xl font-black">
+          Orders ready{" "}
+        </h1>
 
+        <Logo />
         {data.length ? (
-          <div className=" grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-5 mt-5">
+          <div className=" grid grid-cols-2 gap-5 max-w-5xl mx-auto mt-10">
             {data.map((order) => (
-              <OrderCard key={order.id} order={order} />
+              <LatestOrderItem order={order} key={order.id} />
             ))}
           </div>
         ) : (
-          <p className=" text-center">There are no pending orders</p>
+          <p className=" text-center my-10 "> There are no ready orders</p>
         )}
       </>
     );
